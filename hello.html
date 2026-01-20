@@ -7,6 +7,7 @@
   <style>
     body {
       width : 430px;
+      height: 500px;
       margin: 0;
       padding : 10px;
       background : #F5AB16;
@@ -23,36 +24,21 @@
       align-items: center;
       flex-direction: column;
     }
-    .input-container {
-      
-    }
-    .copy-btn {
-      transition : 0.2s all ease;
-      padding : 15px;
-      width : 200px;
-      background : #1660F5;
-      border-radius : 20px;
-      color : #ffffff;
-      border : none;
-      cursor: pointer;
+    .i-o-container {
+      display: flex;
+      flex-direction: column;
     }
 
-    <!-- .copy-btn:hover { -->
-    <!--   transform : translateY(-3px); -->
-    <!-- } -->
-    <!-- .copy-btn:active { -->
-    <!--   transform : translateY(0px); -->
-    <!-- } -->
-
-    .border-red-btn {
+    .copy-btn, .border-red-btn {
       transition : 0.5s all ease;
-      padding : 15px;
-      width : 200px;
-      background : #1660F5;
-      border-radius : 20px;
+      background : #3EC955;
+      padding: 10px;
+      border-radius : 10px;
       border: none;
       color : #ffffff;
       cursor:pointer;
+      font-size: 15px;
+      box-shadow: 1px 1px 2px 2px rgba(0,0,0,0.2);
     }
     .container textarea {
       resize : none;
@@ -68,30 +54,36 @@
       font-size: 20px;
     }
     .btns-container {
-      display : flex;
-      flex-direction: column;
-      gap : 20px;
-      padding : 10px;
+      display : grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 10px;
     }
+   
   </style>
 </head>
 
 <body>
   <div class="main-container">
     <div class="container">
-      <div class="input-container">
-        <p id="input-p">Input here</p>
-        <textarea id="input-text" rows="4" cols="50"></textarea>
+      <div class="i-o-container">
+        <div class="input-container">
+          <p id="input-p">Input here</p>
+          <textarea id="input-text" rows="4" cols="50"></textarea>
+        </div>
+        <div class="output-container">
+          <p id="output-p">Output here</p>
+          <textarea id="output-text" rows="4" cols="50"></textarea>
+        </div>
       </div>
-      <div class="output-container">
-        <p id="output-p">Output here</p>
-        <textarea id="output-text" rows="4" cols="50"></textarea>
-      </div>     
       <div class="btns-container">  
-        <button id="copy-btn" class="copy-btn">Copy</button>    
-        <button id="border-red-btn" class="border-red-btn">Border Red</button>    
-        <button id="no-width" class="border-red-btn">No Width</button>    
+        <button id="copy-btn" class="copy-btn">COPY</button>    
+        <button id="border-red-btn" class="border-red-btn">BORDER RED</button>    
+        <button id="no-width" class="border-red-btn">NO WIDTH</button>    
+        <button id="border-red-no-width" class="border-red-btn">BORDER RED NO WIDTH</button>
       </div>
+      <div class="sizes-container">
+      </div>
+
     </div>
  </div>
   <!-- Script should be at the bottom -->

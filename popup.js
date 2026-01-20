@@ -20,28 +20,27 @@ async function copyText(text) {
   }
 }
 
-
-
 const inputText = document.getElementById("input-text")
 
 inputText.addEventListener("input", () => {
   localStorage.setItem("srcString", inputText.value);
 })
 
+const borderRedNoWidth = document.getElementById("border-red-no-width");
 const copyBtn = document.getElementById("copy-btn");
 const outputText = document.getElementById("output-text");
 const borderRedBtn = document.getElementById("border-red-btn");
 const noWidth = document.getElementById("no-width");
 
-function createImageHTML(customAttrString) {
+function createImageHTML(customAttrString) { // dry principle. thought of this a while back, but didn't know how to execute it efficiently.
   const src = inputText.value || localStorage.getItem("srcString");
   inputText.value = src;
-  return `<img src="${src}" style="display:block; margin-left:auto; margin-right: auto; padding-top : 10px; padding-bottom: 10px; margin-top: 10px; margin-bottom: 10px; ${customAttrString || ''}">`;
+  return `<img src="${src}" style="display:block; margin-left:auto; margin-right: auto; margin-top: 15px; margin-bottom: 15px; ${customAttrString || ''}">`;
 }
 
 // default copy
 copyBtn.addEventListener("click", () => {
-  const html = createImageHTML("width : 100%;");
+  const html = createImageHTML("width : 100%; padding-top: 10px; padding-bottom: 10px");
   copyText(html);
   outputText.value = html;
 })
@@ -53,9 +52,15 @@ borderRedBtn.addEventListener("click", () => {
   outputText.value = html;
 })
 
+borderRedNoWidth.addEventListener("click", () => {
+  const html = createImageHTML("border: 3px solid red;");
+  copyText(html);
+  outputText.value = html;
+});
+
 // no width 100% and borde red
 noWidth.addEventListener("click", () => {
-  const html = createImageHTML();
+  const html = createImageHTML("padding-top: 10px; padding-bottom: 10px;");
   copyText(html)
   outputText.value = html;
 })
