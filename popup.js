@@ -11,7 +11,7 @@ console.log('This is a popup!');
 //   }
 // }
 
-async function copyText(text) {
+export async function copyText(text) {
   try {
     await navigator.clipboard.writeText(text)
     console.log("Copied to clipboard");
@@ -20,49 +20,56 @@ async function copyText(text) {
   }
 }
 
-const inputText = document.getElementById("input-text")
-
-inputText.addEventListener("input", () => {
-  localStorage.setItem("srcString", inputText.value);
-})
-
-const borderRedNoWidth = document.getElementById("border-red-no-width");
-const copyBtn = document.getElementById("copy-btn");
-const outputText = document.getElementById("output-text");
-const borderRedBtn = document.getElementById("border-red-btn");
-const noWidth = document.getElementById("no-width");
-
 function createImageHTML(customAttrString) { // dry principle. thought of this a while back, but didn't know how to execute it efficiently.
   const src = inputText.value || localStorage.getItem("srcString");
   inputText.value = src;
   return `<img src="${src}" style="display:block; margin-left:auto; margin-right: auto; margin-top: 15px; margin-bottom: 15px; ${customAttrString || ''}">`;
 }
 
+export const inputText = document.getElementById("input-text")
+
+inputText.addEventListener("input", () => {
+  const storedRawImg = localStorage.getItem("srcString");
+  // will remove, testing case in the past.
+  const parser = new DOMParser();
+  const newDoc = parser.parseFromString(storedRawImg, "text/html");
+  console.log(newDoc);
+
+  localStorage.setItem("srcString", outputText.value);
+})
+
+const borderRedNoWidth = document.getElementById("border-red-no-width");
+const copyBtn = document.getElementById("copy-btn");
+export const outputText = document.getElementById("output-text");
+const borderRedBtn = document.getElementById("border-red-btn");
+const noWidth = document.getElementById("no-width");
+export const sizesContainer = document.querySelector(".sizes-container");
+
+function handleGenerateImage(customAttrString) {
+  const html = createImageHTML(customAttrString);
+  copyText(html);
+  outputText.value = html
+
+  localStorage.setItem("myImage", html);
+}
+
 // default copy
 copyBtn.addEventListener("click", () => {
-  const html = createImageHTML("width : 100%; padding-top: 10px; padding-bottom: 10px");
-  copyText(html);
-  outputText.value = html;
+  handleGenerateImage("width : 100%; padding-top: 10px; padding-bottom: 10px")
 })
 
 // with border red
 borderRedBtn.addEventListener("click", () => {
-  const html = createImageHTML("width : 100%; border: 3px solid red;")
-  copyText(html);
-  outputText.value = html;
+  handleGenerateImage("width : 100%; border: 3px solid red;")
 })
 
 borderRedNoWidth.addEventListener("click", () => {
-  const html = createImageHTML("border: 3px solid red;");
-  copyText(html);
-  outputText.value = html;
+  handleGenerateImage("border: 3px solid red;")
 });
 
 // no width 100% and borde red
 noWidth.addEventListener("click", () => {
-  const html = createImageHTML("padding-top: 10px; padding-bottom: 10px;");
-  copyText(html)
-  outputText.value = html;
+  handleGenerateImage("padding-top: 10px; padding-bottom: 10px;");
 })
 
 

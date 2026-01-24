@@ -4,62 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Popup</title>
-  <style>
-    body {
-      width : 430px;
-      height: 500px;
-      margin: 0;
-      padding : 10px;
-      background : #F5AB16;
-      color : white;
-    }
-    .main-container {
-      display : flex;
-      flex-direction : column;
-    }
-    .container {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-    }
-    .i-o-container {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .copy-btn, .border-red-btn {
-      transition : 0.5s all ease;
-      background : #3EC955;
-      padding: 10px;
-      border-radius : 10px;
-      border: none;
-      color : #ffffff;
-      cursor:pointer;
-      font-size: 15px;
-      box-shadow: 1px 1px 2px 2px rgba(0,0,0,0.2);
-    }
-    .container textarea {
-      resize : none;
-      border-radius: 10px;
-      padding: 10px;
-    }
-    #input-p {
-      font-size: 20px;
-      font-weight: bold;
-    }
-    #output-p {
-      font-weight: bold;
-      font-size: 20px;
-    }
-    .btns-container {
-      display : grid;
-      grid-template-columns: 1fr 1fr;
-      grid-gap: 10px;
-    }
-   
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -78,16 +23,18 @@
       <div class="btns-container">  
         <button id="copy-btn" class="copy-btn">COPY</button>    
         <button id="border-red-btn" class="border-red-btn">BORDER RED</button>    
-        <button id="no-width" class="border-red-btn">NO WIDTH</button>    
+        <button id="no-width" class="border-red-btn">ORIGINAL SIZE</button>    
         <button id="border-red-no-width" class="border-red-btn">BORDER RED NO WIDTH</button>
       </div>
       <div class="sizes-container">
+          <button id="300x250-size-btn">300x250</button>
       </div>
 
     </div>
  </div>
   <!-- Script should be at the bottom -->
-  <script src="popup.js"></script>
+  <script src="popup.js" type="module"></script>
+  <script src="sizes.js" type="module"></script>
 </body>
 </html>
 
