@@ -23,7 +23,7 @@ export async function copyText(text) {
 function createImageHTML(customAttrString) { // dry principle. thought of this a while back, but didn't know how to execute it efficiently.
   const src = inputText.value || localStorage.getItem("srcString");
   inputText.value = src;
-  return `<img src="${src}" style="display:block; margin-left:auto; margin-right: auto; margin-top: 15px; margin-bottom: 15px; ${customAttrString || ''}">`;
+  return { src: src, htmlString: `<img src="${src}" style="display:block; margin-left:auto; margin-right: auto; margin-top: 15px; margin-bottom: 15px; ${customAttrString || ''}">` };
 }
 
 export const inputText = document.getElementById("input-text")
@@ -47,10 +47,12 @@ export const sizesContainer = document.querySelector(".sizes-container");
 
 function handleGenerateImage(customAttrString) {
   const html = createImageHTML(customAttrString);
-  copyText(html);
-  outputText.value = html
+  copyText(html.htmlString);
+  outputText.value = html.htmlString
+  console.log(html);
 
-  localStorage.setItem("myImage", html);
+  localStorage.setItem("myImage", html.htmlString);
+  localStorage.setItem("srcString", html.src);
 }
 
 // default copy
