@@ -32,12 +32,12 @@ export function addSize(size) {
 }
 
 const sizes = [
-  { name: "320x50", sizeWidth: 320, sizeHeight: 50 },
+  { name: "320x50", sizeWidth: 320, sizeHeight: 70 },
   { name: "300x600", sizeWidth: 300, sizeHeight: 600 },
   { name: "160x600", sizeWidth: 160, sizeHeight: 600 },
   { name: "728x90", sizeWidth: 728, sizeHeight: 90 },
   { name: "970x250", sizeWidth: 970, sizeHeight: 250 },
-  { name: "Interstitial", sizeWidth: 320, sizeHeight: 480 }
+  { name: "300x250", sizeWidth: 300, sizeHeight: 250 }
 ];
 
 // Generate buttons
