@@ -1,7 +1,11 @@
 {
-  "name": "Utility Tool",
+  "name": "Utility Tool v1.1",
   "description": "Base Level Extension",
   "version": "0.0.3",
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
   "manifest_version": 3,
   "action": {
     "default_popup": "hello.html"

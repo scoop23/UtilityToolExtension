@@ -1,0 +1,25 @@
+{
+  "name": "utilitytoolextension",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/scoop23/UtilityToolExtension#readme",
+  "bugs": {
+    "url": "https://github.com/scoop23/UtilityToolExtension/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scoop23/UtilityToolExtension.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "popup.js",
+  "scripts": {},
+  "dependencies": {
+    "playwright": "^1.61.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "@types/node": "^26.1.0"
+  }
+}
