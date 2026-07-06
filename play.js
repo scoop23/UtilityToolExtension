@@ -14,7 +14,7 @@ document.querySelector(".automate-btn").addEventListener("click", async () => {
       if (stickyAd) {
         stickyAd.remove();
       }
-      const adSelectors = ['[data-testid="sticky-hero-ad"]', '[data-testid="ad-container"]', '[data-testid="ad-label"], .ad-stickyhero, .ad--hero, .ad-container'];
+      const adSelectors = '[data-testid="sticky-hero-ad"], [data-testid="ad-container"], [data-testid="ad-label"], .ad-stickyhero, .ad--hero, .ad-container';
 
       // 2. Fallback: Target it by its main descriptive class names just in case
       document.querySelectorAll(adSelectors).forEach(el => el.remove());
