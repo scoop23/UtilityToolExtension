@@ -1,6 +1,3 @@
-// const { chromium } = require('playwright');
-
-
 document.querySelector(".automate-btn").addEventListener("click", async () => {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 
@@ -14,7 +11,19 @@ document.querySelector(".automate-btn").addEventListener("click", async () => {
       if (stickyAd) {
         stickyAd.remove();
       }
-      const adSelectors = '[data-testid="sticky-hero-ad"], [data-testid="ad-container"], [data-testid="ad-label"], .ad-stickyhero, .ad--hero, .ad-container';
+      const adSelectors = [
+        '[data-testid="sticky-hero-ad"]',
+        '[data-testid="ad-container"]',
+        '[data-testid="ad-label"]',
+        '.ad-stickyhero',
+        '.ad--hero',
+        '.ad-container',
+        'div[id^="google_ads_iframe"]',
+        'iframe[name*="google_ads_iframe"]',
+        '.ad__slot',
+        '.ad',
+        '.ad__slot--rail',
+        '.leaderboardAdWrapper'].join(', ');
 
       // 2. Fallback: Target it by its main descriptive class names just in case
       document.querySelectorAll(adSelectors).forEach(el => el.remove());
