@@ -1,3 +1,6 @@
+const ws = new WebSocket("ws://localhost:8888");
+
+
 document.querySelector(".automate-btn").addEventListener("click", async () => {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 
@@ -11,10 +14,12 @@ document.querySelector(".automate-btn").addEventListener("click", async () => {
       if (stickyAd) {
         stickyAd.remove();
       }
+
       const adSelectors = [
         '[data-testid="sticky-hero-ad"]',
         '[data-testid="ad-container"]',
         '[data-testid="ad-label"]',
+        '[aria-label="advertisement"]',
         '.ad-stickyhero',
         '.ad--hero',
         '.ad-container',
@@ -25,11 +30,15 @@ document.querySelector(".automate-btn").addEventListener("click", async () => {
         '.ad__slot--rail',
         '.leaderboardAdWrapper'].join(', ');
 
+
+      document.querySelectorAll(adSelectors).forEach((iframe) => {
+        console.log(iframe);
+      });
       // 2. Fallback: Target it by its main descriptive class names just in case
       document.querySelectorAll(adSelectors).forEach(el => el.remove());
+
     }
   });
-
 });
 
 
