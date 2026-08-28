@@ -1,7 +1,7 @@
 {
-  "name": "Utility Tool v1.1",
+  "name": "Utility Tool",
   "description": "Base Level Extension",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "permissions": [
     "activeTab",
     "scripting"
@@ -9,5 +9,15 @@
   "manifest_version": 3,
   "action": {
     "default_popup": "hello.html"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "utility-tool@zealous-trike",
+      "data_collection_permissions": {
+        "required": [
+          "none"
+        ]
+      }
+    }
   }
 }

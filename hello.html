@@ -3,33 +3,52 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Popup</title>
+  <title>Utility Tool</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
   <div class="main-container">
+    <header class="app-header">
+      <div class="app-header__logo">U</div>
+      <div>
+        <div class="app-header__title">Utility Tool</div>
+        <div class="app-header__subtitle">Ad image generator</div>
+      </div>
+    </header>
+
     <div class="container">
-      <div class="i-o-container">
-        <div class="input-container">
-          <p id="input-p">Input here</p>
-          <textarea id="input-text" rows="4" cols="50"></textarea>
+      <div class="section">
+        <div class="i-o-container">
+          <div class="input-container">
+            <p class="field-label" id="input-p">Source URL</p>
+            <textarea id="input-text" rows="4" placeholder="Paste an image URL here..."></textarea>
+          </div>
+          <div class="output-container">
+            <p class="field-label" id="output-p">Generated HTML</p>
+            <textarea id="output-text" rows="4" placeholder="Your &lt;img&gt; HTML will appear here..."></textarea>
+          </div>
         </div>
-        <div class="output-container">
-          <p id="output-p">Output here</p>
-          <textarea id="output-text" rows="4" cols="50"></textarea>
+      </div>
+
+      <div class="section">
+        <p class="section__title">Actions</p>
+        <div class="btns-container">
+          <button id="copy-btn" class="copy-btn">COPY</button>
+          <button id="border-red-btn" class="border-red-btn">BORDER RED</button>
+          <button id="no-width" class="no-width-btn">ORIGINAL SIZE</button>
+          <button id="border-red-no-width" class="border-red-btn">BORDER RED NO WIDTH</button>
         </div>
       </div>
-      <div class="btns-container">  
-        <button id="copy-btn" class="copy-btn">COPY</button>    
-        <button id="border-red-btn" class="border-red-btn">BORDER RED</button>    
-        <button id="no-width" class="border-red-btn">ORIGINAL SIZE</button>    
-        <button id="border-red-no-width" class="border-red-btn">BORDER RED NO WIDTH</button>
+
+      <div class="section">
+        <p class="section__title">Ad Sizes</p>
+        <div class="sizes-container">
+            <button id="300x250-size-btn">300x250</button>
+        </div>
       </div>
-      <div class="sizes-container">
-          <button id="300x250-size-btn">300x250</button>
-      </div>
-      <button class="automate-btn">hey</button>
+
+      <button class="automate-btn">Automate</button>
 
     </div>
 
@@ -40,4 +59,3 @@
   <script src="sizes.js" type="module"></script>
 </body>
 </html>
-
