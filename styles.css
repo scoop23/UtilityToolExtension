@@ -13,12 +13,70 @@
   --success-hover: #27823a;
   --danger: #e03131;
   --danger-hover: #c92a2a;
+  --accent-light: #4a9eff;
+  --accent-ring: rgba(35, 96, 196, 0.15);
+  --text-on-accent: #ffffff;
+  --surface-hover: #fff7f5;
+  --screenshot-hover: #c94630;
+  --automate: #7c3aed;
+  --automate-light: #a855f7;
+
   --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.06);
   --shadow-md: 0 4px 12px rgba(16, 24, 40, 0.08);
   --radius: 10px;
   --radius-sm: 8px;
   --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif;
+}
+
+/* ===== Dark Theme ===== */
+[data-theme="dark"] {
+  --bg: #1a1b1e;
+  --surface: #25262b;
+  --surface-alt: #2c2e33;
+  --border: #373a40;
+  --text: #c1c2c5;
+  --text-muted: #909296;
+  --accent: #4dabf7;
+  --accent-hover: #339af0;
+  --accent-light: #74c0fc;
+  --accent-ring: rgba(77, 171, 247, 0.2);
+  --success: #40c057;
+  --success-hover: #37b24d;
+  --danger: #fa5252;
+  --danger-hover: #f03e3e;
+  --screenshot: #e8590c;
+  --screenshot-hover: #d9480f;
+  --surface-hover: #2c2e33;
+  --automate: #9775fa;
+  --automate-light: #b197fc;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* ===== Toggle button ===== */
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 15px;
+  padding: 0;
+  margin-left: auto;
+  color: var(--text);
+  box-shadow: none;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.theme-toggle:hover {
+  background: var(--surface-alt);
+  border-color: var(--accent);
+  transform: none;
+  box-shadow: none;
 }
 
 * {
@@ -58,11 +116,11 @@ body {
   width: 26px;
   height: 26px;
   border-radius: 7px;
-  background: linear-gradient(135deg, var(--accent), #4a9eff);
+  background: linear-gradient(135deg, var(--accent), var(--accent-light));
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: var(--text-on-accent);
   font-weight: 700;
   font-size: 13px;
 }
@@ -143,7 +201,7 @@ textarea:focus {
   outline: none;
   border-color: var(--accent);
   background: var(--surface);
-  box-shadow: 0 0 0 3px rgba(35, 96, 196, 0.15);
+  box-shadow: 0 0 0 3px var(--accent-ring);
 }
 
 /* ===== Buttons (generic) ===== */
@@ -155,7 +213,7 @@ button {
   font-weight: 600;
   font-size: 13px;
   padding: 9px 12px;
-  color: #fff;
+  color: var(--text-on-accent);
   transition: transform 0.1s ease, box-shadow 0.15s ease, background 0.15s ease,
     filter 0.15s ease;
   box-shadow: var(--shadow-sm);
@@ -224,9 +282,116 @@ button:focus-visible {
   background: var(--accent-hover);
 }
 
+/* ===== Screenshot Buttons ===== */
+
+.screenshots-container {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+/* Base screenshot button */
+.screenshots-container button {
+  position: relative;
+  min-height: 42px;
+  padding: 9px 10px;
+
+  background: var(--surface);
+  color: var(--text);
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.2;
+
+  box-shadow: var(--shadow-sm);
+
+  transition:
+    transform 0.15s ease,
+    border-color 0.15s ease,
+    background 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+/* Desktop gets the full row */
+.screenshot-btn-desktop {
+  grid-column: 1 / -1;
+}
+
+/* Hover */
+.screenshots-container button:hover {
+  transform: translateY(-1px);
+  border-color: var(--screenshot);
+  background: var(--surface-hover);
+  box-shadow: var(--shadow-md);
+}
+
+/* Click */
+.screenshots-container button:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Keyboard focus */
+.screenshots-container button:focus-visible {
+  outline: 2px solid var(--screenshot);
+  outline-offset: 2px;
+}
+
+/* Desktop button */
+.screenshot-btn-desktop {
+  background: var(--screenshot) !important;
+  color: var(--text-on-accent) !important;
+  border-color: var(--screenshot) !important;
+}
+
+.screenshot-btn-desktop:hover {
+  background: var(--screenshot-hover) !important;
+  border-color: var(--screenshot-hover) !important;
+}
+
+/* Small device icon/accent */
+.screenshot-btn-iphonex,
+.screenshot-btn-iphone6plus,
+.screenshot-btn-iphone14,
+.screenshot-btn-galaxys10,
+.screenshot-btn-ipad {
+  background: var(--surface);
+}
+
+/* ===== Mobile-style labels ===== */
+
+.screenshot-btn-iphonex::before {
+  content: "📱";
+}
+
+.screenshot-btn-iphone6plus::before {
+  content: "📱";
+}
+
+.screenshot-btn-iphone14::before {
+  content: "📱";
+}
+
+.screenshot-btn-galaxys10::before {
+  content: "📱";
+}
+
+.screenshot-btn-ipad::before {
+  content: "▣";
+}
+
+.screenshots-container button::before {
+  margin-right: 6px;
+}
+
+
 /* ===== Automate button ===== */
 .automate-btn {
-  background: linear-gradient(135deg, #7c3aed, #a855f7);
+  background: linear-gradient(135deg, var(--automate), var(--automate-light));
   font-size: 14px;
   padding: 11px;
   width: 100%;
@@ -234,3 +399,5 @@ button:focus-visible {
 .automate-btn:hover {
   filter: brightness(1.05);
 }
+
+

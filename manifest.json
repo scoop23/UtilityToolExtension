@@ -1,7 +1,7 @@
 {
   "name": "Utility Tool",
   "description": "Base Level Extension",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "permissions": [
     "activeTab",
     "scripting"

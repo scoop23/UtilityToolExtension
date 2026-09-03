@@ -46,7 +46,12 @@ export const outputText = document.getElementById("output-text");
 const borderRedBtn = document.getElementById("border-red-btn");
 const noWidth = document.getElementById("no-width");
 export const sizesContainer = document.querySelector(".sizes-container");
-const screenshotBtn = document.querySelector(".screenshot-btn");
+const screenshotBtn = document.querySelector(".screenshot-btn-desktop");
+const screenshotBtnIphoneX = document.querySelector(".screenshot-btn-iphonex");
+const screenshotBtnIphone6 = document.querySelector(".screenshot-btn-iphone6plus");
+const screenshotBtnIphone14 = document.querySelector(".screenshot-btn-iphone14");
+const screenshotBtnGalaxyS10 = document.querySelector(".screenshot-btn-galaxys10");
+const screenshotBtnIpad = document.querySelector(".screenshot-btn-ipad");
 
 function handleGenerateImage(customAttrString) {
   const html = createImageHTML(customAttrString);
@@ -74,10 +79,84 @@ async function captureViewport() {
   link.href = dataUrl;
   link.download = "screenshot.png";
   link.click();
+}
 
+const dimensionTypes = {
+  "iphoneX": { width: 1125, height: 2436 },
+  "iphone6plus": { width: 1242, height: 2208 },
+  "iphone14": { width: 1290, height: 2796 },
+  "galaxys10": { width: 1442, height: 3041 },
+  "ipad": { width: 1536, height: 2048 },
+};
+
+async function captureViewportMobile(type) {
+
+  const [tab] = await chrome.tabs.query({
+    active: true,
+    currentWindow: true,
+  });
+
+  const dataUrl = await chrome.tabs.captureVisibleTab(tab.windowId, {
+    format: "png",
+  });
+
+  const img = new Image();
+  const mwidth = dimensionTypes[type]?.width || 375;
+  const mheight = dimensionTypes[type]?.height || 812;
+
+  img.onload = () => {
+    const canvas = document.createElement("canvas");
+
+    canvas.width = mwidth;
+    canvas.height = mheight;
+
+    const ctx = canvas.getContext("2d");
+
+    ctx.drawImage(
+      img,
+      0,
+      0,
+      mwidth, // dw
+      mheight,// dh
+    );
+
+    const resizedImage = canvas.toDataURL("image/png");
+
+    const link = document.createElement("a");
+    link.href = resizedImage;
+    link.download = `screenshot-${mwidth}x${mheight}.png`;
+    link.click();
+  };
+
+  img.src = dataUrl;
 }
 
 screenshotBtn.addEventListener("click", captureViewport);
+
+screenshotBtnIphoneX.addEventListener("click", () => {
+  captureViewportMobile("iphoneX");
+});
+
+screenshotBtnIphone6.addEventListener("click", () => {
+  captureViewportMobile("iphone6plus");
+});
+
+screenshotBtnIphone14.addEventListener("click", () => {
+  captureViewportMobile("iphone14");
+});
+
+screenshotBtnGalaxyS10.addEventListener("click", () => {
+  captureViewportMobile("galaxys10");
+});
+
+screenshotBtnIpad.addEventListener("click", () => {
+  captureViewportMobile("ipad");
+});
+
+
+
+
+
 
 // default copy
 copyBtn.addEventListener("click", () => {
