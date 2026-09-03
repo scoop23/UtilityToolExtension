@@ -1,4 +1,6 @@
 console.log('This is a popup!');
+// import html2canvas from 'html2canvas';
+
 //
 // class CopyClass {
 //   constructor(attrString) {
@@ -44,6 +46,7 @@ export const outputText = document.getElementById("output-text");
 const borderRedBtn = document.getElementById("border-red-btn");
 const noWidth = document.getElementById("no-width");
 export const sizesContainer = document.querySelector(".sizes-container");
+const screenshotBtn = document.querySelector(".screenshot-btn");
 
 function handleGenerateImage(customAttrString) {
   const html = createImageHTML(customAttrString);
@@ -54,6 +57,27 @@ function handleGenerateImage(customAttrString) {
   localStorage.setItem("myImage", html.htmlString);
   localStorage.setItem("srcString", html.src);
 }
+
+async function captureViewport() {
+  const [tab] = await chrome.tabs.query({
+    active: true,
+    currentWindow: true,
+  });
+
+  const dataUrl = await chrome.tabs.captureVisibleTab(
+    tab.windowId,
+    {
+      format: "png",
+    }
+  );
+  const link = document.createElement("a");
+  link.href = dataUrl;
+  link.download = "screenshot.png";
+  link.click();
+
+}
+
+screenshotBtn.addEventListener("click", captureViewport);
 
 // default copy
 copyBtn.addEventListener("click", () => {
