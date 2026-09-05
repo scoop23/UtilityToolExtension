@@ -82,6 +82,7 @@ async function captureViewport() {
 }
 
 const dimensionTypes = {
+  "desktop": { width: 1920, height: 1080 },
   "iphoneX": { width: 1125, height: 2436 },
   "iphone6plus": { width: 1242, height: 2208 },
   "iphone14": { width: 1290, height: 2796 },
@@ -131,6 +132,10 @@ async function captureViewportMobile(type) {
   img.src = dataUrl;
 }
 
+// screenshotBtn.addEventListener("click", () => {
+//   captureViewportMobile("desktop");
+// });
+
 screenshotBtn.addEventListener("click", captureViewport);
 
 screenshotBtnIphoneX.addEventListener("click", () => {
@@ -152,8 +157,6 @@ screenshotBtnGalaxyS10.addEventListener("click", () => {
 screenshotBtnIpad.addEventListener("click", () => {
   captureViewportMobile("ipad");
 });
-
-
 
 
 
