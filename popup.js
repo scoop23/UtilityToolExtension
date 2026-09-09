@@ -53,6 +53,10 @@ const screenshotBtnIphone14 = document.querySelector(".screenshot-btn-iphone14")
 const screenshotBtnGalaxyS10 = document.querySelector(".screenshot-btn-galaxys10");
 const screenshotBtnIpad = document.querySelector(".screenshot-btn-ipad");
 
+const screenShotsContainer = document.querySelector(".screenshots-container");
+
+
+
 function handleGenerateImage(customAttrString) {
   const html = createImageHTML(customAttrString);
   copyText(html.htmlString);
@@ -88,7 +92,16 @@ const dimensionTypes = {
   "iphone14": { width: 1290, height: 2796 },
   "galaxys10": { width: 1442, height: 3041 },
   "ipad": { width: 1536, height: 2048 },
+
+  "pixel4" : {width: 1059, height: 2235},
+  "nexus10": { width: 1600, height: 2560},
+  "nexus6": {width: 1442, height: 2562},
+  "iphone6" : { width: 750, height: 1334},
 };
+// Pixel 4
+// Nexus 10 
+// Nexus 6
+
 
 async function captureViewportMobile(type) {
 
