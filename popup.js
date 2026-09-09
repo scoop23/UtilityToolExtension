@@ -12,6 +12,11 @@ console.log('This is a popup!');
 //     return ``
 //   }
 // }
+//
+function capitalizeFirstLetter(text) {
+  if (!text) return ""; // Handle empty or null strings
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
 
 export async function copyText(text) {
   try {
@@ -85,25 +90,42 @@ async function captureViewport() {
   link.click();
 }
 
-const dimensionTypes = {
-  "desktop": { width: 1920, height: 1080 },
-  "iphoneX": { width: 1125, height: 2436 },
-  "iphone6plus": { width: 1242, height: 2208 },
-  "iphone14": { width: 1290, height: 2796 },
-  "galaxys10": { width: 1442, height: 3041 },
-  "ipad": { width: 1536, height: 2048 },
+const dimensionTypes = [
+  {"desktop": { width: 1920, height: 1080 }},
+  {"iphone-X": { width: 1125, height: 2436 }},
+  {"iphone-6-plus": { width: 1242, height: 2208 }},
+  {"iphone-14": { width: 1290, height: 2796 }},
+  {"galaxys-10": { width: 1442, height: 3041 }},
+  {"ipad": { width: 1536, height: 2048 }},
 
-  "pixel4" : {width: 1059, height: 2235},
-  "nexus10": { width: 1600, height: 2560},
-  "nexus6": {width: 1442, height: 2562},
-  "iphone6" : { width: 750, height: 1334},
-};
+  {"pixel-4" : {width: 1059, height: 2235}},
+  {"nexus-10": { width: 1600, height: 2560}},
+  {"nexus-6": {width: 1442, height: 2562}},
+  {"iphone-6" : { width: 750, height: 1334}},
+];
 // Pixel 4
 // Nexus 10 
 // Nexus 6
 
+// main generator
+dimensionTypes.forEach(element => {
+  const dimensionName = Object.keys(element);
+  const dimensionValues = Object.values(element);
+  const width = dimensionValues[0].width;
+  const height = dimensionValues[0].height;
+  const normalizedname = capitalizeFirstLetter(dimensionName[0].split('-').join(" "));
 
-async function captureViewportMobile(type) {
+  const button = document.createElement("button");
+  button.className = `screenshot-btn-${dimensionName}`;
+  button.textContent = `${normalizedname} Screenshot`;
+  
+  button.addEventListener("click", () => {
+    captureViewportMobile(dimensionName[0], width, height);
+  });
+  screenShotsContainer.appendChild(button);
+});
+
+async function captureViewportMobile(type, mwidth, mheight) {
 
   const [tab] = await chrome.tabs.query({
     active: true,
@@ -115,14 +137,15 @@ async function captureViewportMobile(type) {
   });
 
   const img = new Image();
-  const mwidth = dimensionTypes[type]?.width || 375;
-  const mheight = dimensionTypes[type]?.height || 812;
+  const mwidthx = mwidth || 375;
+  const mheightx = mheight || 812;
+  const date = new Date();
 
   img.onload = () => {
     const canvas = document.createElement("canvas");
 
-    canvas.width = mwidth;
-    canvas.height = mheight;
+    canvas.width = mwidthx;
+    canvas.height = mheightx;
 
     const ctx = canvas.getContext("2d");
 
@@ -130,15 +153,23 @@ async function captureViewportMobile(type) {
       img,
       0,
       0,
-      mwidth, // dw
-      mheight,// dh
+      mwidthx, // dw
+      mheightx,// dh
     );
 
     const resizedImage = canvas.toDataURL("image/png");
+    const timestamp = date.toLocaleString('en-US', {
+      weekday: 'long', 
+      year: 'numeric', 
+      month: 'short', 
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    }).replace(/[/:,]/g, '-').replaceAll(" ", "");
 
     const link = document.createElement("a");
     link.href = resizedImage;
-    link.download = `screenshot-${mwidth}x${mheight}.png`;
+    link.download = `screenshot-${mwidthx}x${mheightx}-${timestamp}.png`
     link.click();
   };
 
@@ -149,27 +180,27 @@ async function captureViewportMobile(type) {
 //   captureViewportMobile("desktop");
 // });
 
-screenshotBtn.addEventListener("click", captureViewport);
-
-screenshotBtnIphoneX.addEventListener("click", () => {
-  captureViewportMobile("iphoneX");
-});
-
-screenshotBtnIphone6.addEventListener("click", () => {
-  captureViewportMobile("iphone6plus");
-});
-
-screenshotBtnIphone14.addEventListener("click", () => {
-  captureViewportMobile("iphone14");
-});
-
-screenshotBtnGalaxyS10.addEventListener("click", () => {
-  captureViewportMobile("galaxys10");
-});
-
-screenshotBtnIpad.addEventListener("click", () => {
-  captureViewportMobile("ipad");
-});
+// screenshotBtn.addEventListener("click", captureViewport);
+//
+// screenshotBtnIphoneX.addEventListener("click", () => {
+//   captureViewportMobile("iphoneX");
+// });
+//
+// screenshotBtnIphone6.addEventListener("click", () => {
+//   captureViewportMobile("iphone6plus");
+// });
+//
+// screenshotBtnIphone14.addEventListener("click", () => {
+//   captureViewportMobile("iphone14");
+// });
+//
+// screenshotBtnGalaxyS10.addEventListener("click", () => {
+//   captureViewportMobile("galaxys10");
+// });
+//
+// screenshotBtnIpad.addEventListener("click", () => {
+//   captureViewportMobile("ipad");
+// });
 
 
 
