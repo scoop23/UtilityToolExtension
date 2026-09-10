@@ -10,6 +10,7 @@
   --accent-hover: #1d51a7;
   --success: #2f9e44;
   --screenshot: #D64F36;
+  --screenshot-desktop-hd: #2257AB;
   --success-hover: #27823a;
   --danger: #e03131;
   --danger-hover: #c92a2a;
@@ -319,6 +320,13 @@ button:focus-visible {
 
 /* Desktop gets the full row */
 .screenshot-btn-desktop {
+  grid-column: 1 / -1;
+}
+
+#desktopScreenshot {
+ background: var(--screenshot-desktop-hd) !important;
+  color: var(--text-on-accent) !important;
+  border-color: var(--screenshot-desktop-hd) !important;
   grid-column: 1 / -1;
 }
 

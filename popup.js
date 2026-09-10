@@ -125,6 +125,20 @@ dimensionTypes.forEach(element => {
   screenShotsContainer.appendChild(button);
 });
 
+document
+  .getElementById("desktopScreenshot")
+  .addEventListener("click", async () => {
+
+    const response = await chrome.runtime.sendMessage({
+      action: "captureDesktop",
+      width: 1920,
+      height: 1080,
+      deviceScaleFactor: 1
+    });
+
+    console.log(response);
+  });
+
 async function captureViewportMobile(type, mwidth, mheight) {
 
   const [tab] = await chrome.tabs.query({
@@ -148,6 +162,9 @@ async function captureViewportMobile(type, mwidth, mheight) {
     canvas.height = mheightx;
 
     const ctx = canvas.getContext("2d");
+
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = "high";
 
     ctx.drawImage(
       img,
