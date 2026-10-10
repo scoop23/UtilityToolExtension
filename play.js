@@ -28,7 +28,8 @@ document.querySelector(".automate-btn").addEventListener("click", async () => {
         '.ad__slot',
         '.ad',
         '.ad__slot--rail',
-        '.leaderboardAdWrapper'].join(', ');
+        '.leaderboardAdWrapper',
+        'ad-container'].join(', ');
 
 
       document.querySelectorAll(adSelectors).forEach((iframe) => {

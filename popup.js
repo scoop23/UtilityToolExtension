@@ -125,6 +125,9 @@ dimensionTypes.forEach(element => {
   screenShotsContainer.appendChild(button);
 });
 
+
+// hd desktop screenshot using chrome debugger API
+
 document
   .getElementById("desktopScreenshot")
   .addEventListener("click", async () => {

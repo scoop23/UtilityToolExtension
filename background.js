@@ -86,7 +86,7 @@ async function captureDesktopScreenshot(
 
         deviceScaleFactor: deviceScaleFactor,
 
-        mobile: false
+        mobile: true
       }
     );
 
