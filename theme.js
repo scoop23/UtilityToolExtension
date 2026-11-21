@@ -1,4 +1,8 @@
 (function() {
+  if (new URLSearchParams(window.location.search).get("mode") === "toolbar") {
+    document.documentElement.classList.add("toolbar-popup");
+  }
+
   var saved = localStorage.getItem("theme") || "light";
   document.documentElement.setAttribute("data-theme", saved);
 

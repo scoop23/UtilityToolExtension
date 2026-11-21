@@ -1,3 +1,11 @@
+// true: separate window; false: Chrome's default toolbar popup.
+// Reload the extension after changing this value.
+const USE_POPUP_WINDOW = false;
+
+chrome.action.setPopup({
+  popup: USE_POPUP_WINDOW ? "" : "hello.html?mode=toolbar"
+}).catch((error) => console.error("Could not configure Utility Tool:", error));
+
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   console.log("📨 RECEIVED:", message);
 
@@ -8,7 +16,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   captureDesktopScreenshot(
     message.width,
     message.height,
-    message.deviceScaleFactor
+    message.deviceScaleFactor,
+    message.tabId
   )
     .then(() => {
       sendResponse({ success: true });
@@ -29,10 +38,13 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 async function captureDesktopScreenshot(
   width = 1920,
   height = 1080,
-  deviceScaleFactor = 1
+  deviceScaleFactor = 1,
+  sourceTabId
 ) {
 
-  const [tab] = await chrome.tabs.query({
+  const [tab] = sourceTabId != null
+    ? [await chrome.tabs.get(sourceTabId)]
+    : await chrome.tabs.query({
     active: true,
     currentWindow: true
   });
@@ -194,3 +206,19 @@ function sleep(ms) {
     setTimeout(resolve, ms);
   });
 }
+
+chrome.action.onClicked.addListener((tab) => {
+  if (!USE_POPUP_WINDOW) return;
+
+  const params = new URLSearchParams({
+    tabid: String(tab.id),
+    url: tab.url || ""
+  });
+
+  chrome.windows.create({
+    url: chrome.runtime.getURL(`hello.html?${params}`),
+    type: "popup",
+    width: 720,
+    height: 650
+  }).catch((error) => console.error("Could not open Utility Tool:", error));
+});

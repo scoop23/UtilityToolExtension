@@ -1,3 +1,5 @@
+import { getSourceTab } from "./source-tab.js";
+
 console.log('This is a popup!');
 // import html2canvas from 'html2canvas';
 
@@ -73,10 +75,7 @@ function handleGenerateImage(customAttrString) {
 }
 
 async function captureViewport() {
-  const [tab] = await chrome.tabs.query({
-    active: true,
-    currentWindow: true,
-  });
+  const tab = await getSourceTab();
 
   const dataUrl = await chrome.tabs.captureVisibleTab(
     tab.windowId,
@@ -132,7 +131,9 @@ document
   .getElementById("desktopScreenshot")
   .addEventListener("click", async () => {
 
+    const tab = await getSourceTab();
     const response = await chrome.runtime.sendMessage({
+      tabId: tab.id,
       action: "captureDesktop",
       width: 1920,
       height: 1080,
@@ -144,10 +145,7 @@ document
 
 async function captureViewportMobile(type, mwidth, mheight) {
 
-  const [tab] = await chrome.tabs.query({
-    active: true,
-    currentWindow: true,
-  });
+  const tab = await getSourceTab();
 
   const dataUrl = await chrome.tabs.captureVisibleTab(tab.windowId, {
     format: "png",

@@ -1,0 +1,210 @@
+/* Muted timber and antique gold, inspired by the supplied reference. */
+:root, [data-theme="dark"] {
+  --bg: #17150e;
+  --surface: #242116;
+  --surface-alt: #19170f;
+  --surface-hover: #302b1c;
+  --border: #48402a;
+  --text: #ddd3b0;
+  --text-muted: #b0a481;
+  --accent: #3a3320;
+  --accent-hover: #49402a;
+  --accent-light: #b49a5c;
+  --accent-ring: rgb(180 154 92 / 18%);
+  --text-on-accent: #e1d5ae;
+  --success: #28271b;
+  --success-hover: #383524;
+  --danger: #2d241a;
+  --danger-hover: #403224;
+  --screenshot: #282419;
+  --screenshot-hover: #363020;
+  --screenshot-desktop-hd: #302b1d;
+  --desktop-top: #625439;
+  --desktop-bottom: #453b28;
+  --desktop-text: #fff0c9;
+  --desktop-border: #a38a53;
+  --desktop-hover-top: #756441;
+  --desktop-hover-bottom: #57492e;
+  --automate: #302a1a;
+  --automate-light: #3b3320;
+  --radius: 4px;
+  --radius-sm: 4px;
+  --font: "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  --shadow-sm: inset 0 1px 0 rgb(223 201 143 / 3%);
+  --shadow-md: inset 0 0 12px rgb(180 154 92 / 5%);
+}
+
+[data-theme="dark"] {
+  --bg: #100f0a;
+  --surface: #1d1b12;
+  --surface-alt: #13120c;
+  --desktop-top: #332e1f;
+  --desktop-bottom: #211e14;
+  --desktop-text: #e2d4a9;
+  --desktop-border: #75633c;
+  --desktop-hover-top: #443c27;
+  --desktop-hover-bottom: #30291b;
+}
+
+body {
+  background-color: var(--bg);
+  background-image:
+    repeating-linear-gradient(0deg, transparent 0 2px, rgb(214 191 132 / 1.5%) 3px, transparent 4px),
+    radial-gradient(ellipse at 35% 0, rgb(122 101 60 / 15%), transparent 65%),
+    linear-gradient(180deg, rgb(65 55 33 / 30%), transparent 80%);
+}
+
+.main-container { border: 1px solid #4b422c; position: relative; }
+.main-container::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 15px;
+  height: 15px;
+  border-top: 1px solid #8e7847;
+  border-left: 1px solid #8e7847;
+  pointer-events: none;
+}
+
+.app-header {
+  padding: 20px 17px 17px;
+  gap: 13px;
+  color: #d8c38a;
+  border-bottom: 1px solid #49402a;
+  background: linear-gradient(180deg, rgb(74 63 40 / 32%), rgb(34 30 19 / 15%));
+}
+
+.app-header__logo {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid #574b30;
+  background: radial-gradient(circle at 45% 30%, #332c1a, #100f09 75%);
+  color: #d8c38a;
+  font-size: 25px;
+  font-weight: normal;
+  box-shadow: 0 0 0 3px rgb(0 0 0 / 12%), inset 0 1px 3px rgb(210 182 112 / 10%);
+}
+
+.app-header__title {
+  font-size: 27px;
+  line-height: 1.15;
+  font-weight: 600;
+  letter-spacing: .015em;
+  text-shadow: 0 2px 2px #17130b;
+}
+
+.app-header__subtitle { color: #b6aa84; font-size: 13px; font-style: italic; margin-top: 4px; }
+.theme-toggle { color: #baaa7c; border: 1px solid #49402a; border-radius: 3px; background: transparent; }
+.theme-toggle:hover { background: #332e1e; }
+.container { gap: 16px; padding: 16px 14px; scrollbar-color: #655536 #19170f; scrollbar-width: thin; }
+
+.section, .output-container {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+}
+
+.section__title, .field-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .18em;
+  color: #b39b64;
+}
+.section__title::after, .field-label::after { content: ""; flex: 1; height: 1px; background: #443b26; }
+.field-label { margin: 5px 0; }
+
+textarea {
+  background: linear-gradient(180deg, rgb(255 232 173 / 2%), transparent), var(--surface-alt);
+  border-color: #453d29;
+  border-radius: 3px;
+  font-family: Consolas, monospace;
+  font-size: 12px;
+  box-shadow: inset 0 2px 5px rgb(0 0 0 / 15%);
+}
+textarea::placeholder { color: #94896a; opacity: 1; }
+
+button:not(.theme-toggle) {
+  border: 1px solid #49402a;
+  color: var(--text);
+  background: linear-gradient(180deg, rgb(156 134 81 / 7%), rgb(0 0 0 / 10%)), var(--surface);
+  box-shadow: inset 0 1px 0 rgb(223 201 143 / 3%);
+  font-weight: 600;
+  text-align: left;
+  letter-spacing: .015em;
+}
+button:not(.theme-toggle):hover {
+  background-color: var(--surface-hover);
+  border-color: #9b844f;
+  color: #eee0b5;
+  transform: none;
+  box-shadow: inset 0 0 12px rgb(180 154 92 / 5%);
+}
+.screenshots-container { gap: 8px; }
+.screenshots-container button { min-height: 58px; padding: 12px 10px; font-size: 13px; }
+.screenshots-container button::before {
+  content: "\2727";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+  margin-right: 8px;
+  vertical-align: middle;
+  border-radius: 50%;
+  border: 1px solid #4b412a;
+  background: radial-gradient(circle at 40% 25%, #3e3520, #121109);
+  color: #c9b275;
+  font-size: 16px;
+}
+#desktopScreenshot, .screenshot-btn-desktop {
+  background: linear-gradient(180deg, var(--desktop-top), var(--desktop-bottom)) !important;
+  border-color: var(--desktop-border) !important;
+  color: var(--desktop-text) !important;
+}
+#desktopScreenshot:hover, .screenshot-btn-desktop:hover {
+  background: linear-gradient(180deg, var(--desktop-hover-top), var(--desktop-hover-bottom)) !important;
+  border-color: #b49a5c !important;
+}
+.btns-container { gap: 8px; }
+.sizes-container { gap: 8px; }
+.size-btns { min-height: 39px; }
+button.automate-btn {
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .18em;
+  border-color: #8b7546;
+  background: linear-gradient(180deg, #39311e, #262115);
+}
+button:focus-visible { outline: 2px solid #c3a769; outline-offset: 2px; }
+
+/* Keep the source field visible below the screenshot tools in the toolbar. */
+.toolbar-popup .app-header { padding: 12px 15px; }
+.toolbar-popup .app-header__logo { width: 36px; height: 36px; font-size: 21px; }
+.toolbar-popup .app-header__title { font-size: 23px; }
+.toolbar-popup .container { padding: 10px 14px; gap: 12px; }
+.toolbar-popup .screenshots-container { gap: 4px; margin-bottom: 4px; }
+.toolbar-popup .screenshots-container button {
+  min-height: 44px;
+  padding: 10px 12px;
+  font-size: 13px;
+}
+.toolbar-popup .screenshots-container button::before {
+  width: 19px;
+  height: 19px;
+  margin-right: 5px;
+  font-size: 13px;
+}
+.toolbar-popup .field-label { margin: 3px 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  button, textarea { transition: none; }
+}

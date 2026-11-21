@@ -1,8 +1,10 @@
+import { getSourceTab } from "./source-tab.js";
+
 const ws = new WebSocket("ws://localhost:8888");
 
 
 document.querySelector(".automate-btn").addEventListener("click", async () => {
-  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+  const tab = await getSourceTab();
 
   chrome.scripting.executeScript({
     target: { tabId: tab.id },
