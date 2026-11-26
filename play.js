@@ -4,9 +4,18 @@ const ws = new WebSocket("ws://localhost:8888");
 
 
 document.querySelector(".automate-btn").addEventListener("click", async () => {
+  let status = document.getElementById("automate-status");
+  if (!status) {
+    status = document.createElement("p");
+    status.id = "automate-status";
+    status.setAttribute("role", "status");
+    document.querySelector(".automate-btn").after(status);
+  }
+  status.textContent = "";
+  try {
   const tab = await getSourceTab();
 
-  chrome.scripting.executeScript({
+  await chrome.scripting.executeScript({
     target: { tabId: tab.id },
     func: () => {
       console.log("Removing the sticky hero ad wrapper...");
@@ -42,6 +51,12 @@ document.querySelector(".automate-btn").addEventListener("click", async () => {
 
     }
   });
+  status.textContent = "Ad cleanup completed.";
+  } catch (error) {
+    status.textContent = /ExtensionsSettings|policy/i.test(error.message)
+      ? "Chrome policy blocks this extension from modifying this page. Check ExtensionSettings at chrome://policy or contact your browser administrator."
+      : `Could not modify this page: ${error.message}`;
+  }
 });
 
 

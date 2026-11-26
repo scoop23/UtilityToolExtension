@@ -336,9 +336,6 @@ button:focus-visible {
 }
 
 #desktopScreenshot {
- background: var(--screenshot-desktop-hd) !important;
-  color: var(--text-on-accent) !important;
-  border-color: var(--screenshot-desktop-hd) !important;
   grid-column: 1 / -1;
 }
 
@@ -360,18 +357,6 @@ button:focus-visible {
 .screenshots-container button:focus-visible {
   outline: 2px solid var(--screenshot);
   outline-offset: 2px;
-}
-
-/* Desktop button */
-.screenshot-btn-desktop {
-  background: var(--screenshot) !important;
-  color: var(--text-on-accent) !important;
-  border-color: var(--screenshot) !important;
-}
-
-.screenshot-btn-desktop:hover {
-  background: var(--screenshot-hover) !important;
-  border-color: var(--screenshot-hover) !important;
 }
 
 /* Small device icon/accent */

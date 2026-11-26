@@ -1,4 +1,5 @@
 // true: separate window; false: Chrome's default toolbar popup.
+
 // Reload the extension after changing this value.
 const USE_POPUP_WINDOW = false;
 
@@ -7,33 +8,27 @@ chrome.action.setPopup({
 }).catch((error) => console.error("Could not configure Utility Tool:", error));
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  console.log("📨 RECEIVED:", message);
+  // console.log("📨 RECEIVED:", message);
+  console.log(message.action);
 
-  if (message.action !== "captureDesktop") {
-    return;
-  }
-
-  captureDesktopScreenshot(
-    message.width,
-    message.height,
-    message.deviceScaleFactor,
-    message.tabId
-  )
-    .then(() => {
-      sendResponse({ success: true });
-    })
-    .catch((error) => {
-      console.error("❌ Capture failed:", error);
-
-      sendResponse({
-        success: false,
-        error: error.message
+  if (message.action === "captureDesktop") {
+    captureDesktopScreenshot(
+      message.width,
+      message.height,
+      message.deviceScaleFactor,
+      message.tabId
+    ).then(() => {
+        sendResponse({ success: true });
+      }).catch((error) => {
+        console.error("Capture Failed:", error);
+        sendResponse({
+          success: false,
+          error: error.message,
+        });
       });
-    });
-
-  return true;
+    return true;
+  }
 });
-
 
 async function captureDesktopScreenshot(
   width = 1920,
@@ -45,9 +40,9 @@ async function captureDesktopScreenshot(
   const [tab] = sourceTabId != null
     ? [await chrome.tabs.get(sourceTabId)]
     : await chrome.tabs.query({
-    active: true,
-    currentWindow: true
-  });
+      active: true,
+      currentWindow: true
+    });
 
   if (!tab?.id) {
     throw new Error("No active tab found.");
@@ -142,15 +137,15 @@ async function captureDesktopScreenshot(
     // --------------------------------
 
     const timestamp = new Date()
-      .toISOString()
-      .replace(/[:.]/g, "-");
+    .toISOString()
+    .replace(/[:.]/g, "-");
 
 
     await chrome.downloads.download({
       url: dataUrl,
 
       filename:
-        `screenshot-${width}x${height}-${timestamp}.png`,
+      `screenshot-${width}x${height}-${timestamp}.png`,
 
       saveAs: true
     });

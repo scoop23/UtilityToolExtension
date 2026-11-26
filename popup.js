@@ -130,68 +130,82 @@ dimensionTypes.forEach(element => {
 document
   .getElementById("desktopScreenshot")
   .addEventListener("click", async () => {
+    console.log("🖱️ Desktop HD Screenshot button clicked!");
+    try {
+      console.log("🔍 Finding source tab...");
+      const tab = await getSourceTab();
+      console.log("🎯 Source tab:", tab);
 
-    const tab = await getSourceTab();
-    const response = await chrome.runtime.sendMessage({
-      tabId: tab.id,
-      action: "captureDesktop",
-      width: 1920,
-      height: 1080,
-      deviceScaleFactor: 1
-    });
+      console.log("📤 Sending 'captureDesktop' message to background...");
+      const response = await chrome.runtime.sendMessage({
+        tabId: tab.id,
+        action: "captureDesktop",
+        width: 1920,
+        height: 1080,
+        deviceScaleFactor: 1
+      });
 
-    console.log(response);
+      console.log("✅ Background response:", response);
+    } catch (err) {
+      console.error("❌ Failed to capture screenshot:", err);
+    }
   });
 
 async function captureViewportMobile(type, mwidth, mheight) {
+  console.log(`🖱️ Viewport screenshot clicked: ${type} (${mwidth}x${mheight})`);
+  try {
+    const tab = await getSourceTab();
+    console.log("🎯 Source tab:", tab);
 
-  const tab = await getSourceTab();
+    const dataUrl = await chrome.tabs.captureVisibleTab(tab.windowId, {
+      format: "png",
+    });
 
-  const dataUrl = await chrome.tabs.captureVisibleTab(tab.windowId, {
-    format: "png",
-  });
+    const img = new Image();
+    const mwidthx = mwidth || 375;
+    const mheightx = mheight || 812;
+    const date = new Date();
 
-  const img = new Image();
-  const mwidthx = mwidth || 375;
-  const mheightx = mheight || 812;
-  const date = new Date();
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
 
-  img.onload = () => {
-    const canvas = document.createElement("canvas");
+      canvas.width = mwidthx;
+      canvas.height = mheightx;
 
-    canvas.width = mwidthx;
-    canvas.height = mheightx;
+      const ctx = canvas.getContext("2d");
 
-    const ctx = canvas.getContext("2d");
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = "high";
 
-    ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = "high";
+      ctx.drawImage(
+        img,
+        0,
+        0,
+        mwidthx, // dw
+        mheightx,// dh
+      );
 
-    ctx.drawImage(
-      img,
-      0,
-      0,
-      mwidthx, // dw
-      mheightx,// dh
-    );
+      const resizedImage = canvas.toDataURL("image/png");
+      const timestamp = date.toLocaleString('en-US', {
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      }).replace(/[/:,]/g, '-').replaceAll(" ", "");
 
-    const resizedImage = canvas.toDataURL("image/png");
-    const timestamp = date.toLocaleString('en-US', {
-      weekday: 'long', 
-      year: 'numeric', 
-      month: 'short', 
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    }).replace(/[/:,]/g, '-').replaceAll(" ", "");
+      const link = document.createElement("a");
+      link.href = resizedImage;
+      link.download = `screenshot-${mwidthx}x${mheightx}-${timestamp}.png`;
+      link.click();
+      console.log("✅ Download triggered:", link.download);
+    };
 
-    const link = document.createElement("a");
-    link.href = resizedImage;
-    link.download = `screenshot-${mwidthx}x${mheightx}-${timestamp}.png`
-    link.click();
-  };
-
-  img.src = dataUrl;
+    img.src = dataUrl;
+  } catch (err) {
+    console.error("❌ captureViewportMobile error:", err);
+  }
 }
 
 // screenshotBtn.addEventListener("click", () => {
@@ -242,7 +256,9 @@ noWidth.addEventListener("click", () => {
   handleGenerateImage("padding-top: 10px; padding-bottom: 10px;");
 })
 
-
+// function sendStuff() {
+//   chrome.tabs.sendMessage()
+// }
 
 
 
